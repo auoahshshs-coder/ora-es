@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sancti estote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#12172e;--bg2:#1b2250;--ink:#ece8f6;--mut:#a39fc4;--line:#ffffff1f;--gold:#f2c46d;--panel:#ffffff0d;
+  --serif:"Cormorant Garamond",Garamond,Georgia,serif;--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#eeeaf7;--bg2:#dcd6f0;--ink:#1b1838;--mut:#5d5887;--line:#1b18382e;--gold:#b57d12;--panel:#1b18380a}}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%) fixed;background-color:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 50% at 50% 12%,#f2c46d,transparent 70%);opacity:0;transition:opacity 1.4s ease}
+body.lit::before{opacity:.28}
+@media (prefers-color-scheme:light){body.lit::before{opacity:.45}}
+main{position:relative;max-width:1000px;margin:0 auto;padding:48px 20px 72px}
+h1,h2{font-family:var(--serif);font-weight:400;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+[hidden]{display:none!important}
+
+/* home */
+.hero{text-align:center;margin-bottom:44px}
+.hero h1{font-size:clamp(3rem,10vw,5.5rem);font-style:italic;line-height:1;letter-spacing:-.01em}
+.hero p{color:var(--mut);margin:14px 0 0;font-size:1.05rem}
+.windows{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;justify-items:center}
+.arch{position:relative;width:100%;max-width:260px;aspect-ratio:3/5;border:0;padding:0;text-align:left;border-radius:130px 130px 10px 10px;overflow:hidden;background:var(--g);box-shadow:0 0 0 2px var(--line),0 24px 50px -24px #000a;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.arch::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(60deg,transparent 0 46px,#0007 46px 49px),
+  repeating-linear-gradient(-60deg,transparent 0 46px,#0007 46px 49px),
+  radial-gradient(circle at 50% 30%,#ffffff55,transparent 55%)}
+.arch::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,#000c)}
+.arch:hover,.arch:focus-visible{transform:translateY(-8px);box-shadow:0 0 0 2px var(--gold),0 30px 60px -24px #000}
+.arch span{position:absolute;z-index:1;left:22px;right:22px;bottom:22px;color:#fff}
+.arch b{display:block;font-family:var(--serif);font-weight:600;font-size:2rem;line-height:1.05}
+.arch small{display:block;margin-top:6px;font-size:.88rem;opacity:.85}
+.a1{--g:linear-gradient(160deg,#4668f0,#101a5a)}
+.a2{--g:linear-gradient(160deg,#e0457a,#4b0f2c)}
+.a3{--g:linear-gradient(160deg,#27a893,#0a3a3c)}
+
+/* reader */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:9px 18px;color:var(--mut)}
+.back:hover{color:var(--ink);border-color:var(--ink)}
+.head{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;max-width:680px;margin:0 auto 28px}
+.head h2{font-size:clamp(2.4rem,7vw,3.8rem);line-height:1;color:var(--ink)}
+.head p{margin:10px 0 0;color:var(--mut)}
+.candle-btn{background:none;border:0;padding:30px 8px 0;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--mut);font-size:.85rem}
+.candle{position:relative;width:26px;height:74px;border-radius:3px 3px 5px 5px;background:linear-gradient(90deg,#cbbd98,#f6efd9 45%,#c3b48d)}
+.candle::before{content:"";position:absolute;top:-7px;left:50%;width:2px;height:8px;background:#2a2118;translate:-50% 0}
+.flame{position:absolute;top:-34px;left:50%;width:15px;height:28px;translate:-50% 0;scale:0;transform-origin:50% 100%;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:radial-gradient(ellipse at 50% 72%,#fffbe0,#f6c453 52%,#f2994a 72%,transparent 74%);filter:drop-shadow(0 0 12px #f2c46d);transition:scale .5s}
+.lit .flame{scale:1;animation:flick 2.6s ease-in-out infinite}
+@keyframes flick{0%,100%{scale:1 1;rotate:0deg}25%{scale:.93 1.07;rotate:-2deg}55%{scale:1.05 .95;rotate:2deg}80%{scale:.97 1.04;rotate:-1deg}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;margin:0 auto 28px;position:relative;left:50%;translate:-50% 0}
+.seg button{background:none;border:0;border-radius:999px;padding:8px 20px;color:var(--mut)}
+.seg button[aria-pressed=true]{background:var(--gold);color:#1a1405;font-weight:600}
+.prayer{max-width:680px;margin:0 auto;font-family:var(--serif);font-size:clamp(1.3rem,3.6vw,1.6rem);line-height:1.62}
+.prayer p{margin:0 0 1.15em;text-wrap:pretty}
+.prayer p:first-child::first-letter{float:left;font-size:3.6em;line-height:.8;padding:.06em .1em 0 0;color:var(--gold);font-style:italic}
+.hint{color:var(--mut);font-family:var(--sans);font-size:.95rem}
+
+/* terço */
+.rosary{max-width:680px;margin:0 auto;text-align:center}
+.bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+.count{color:var(--mut);font-size:.9rem;margin-bottom:22px}
+.beads{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-bottom:26px;min-height:30px;align-items:center}
+.bead{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffffff55,transparent 40%),var(--line);transition:background .25s,scale .25s}
+.bead.big{width:28px;height:28px}
+.bead.done{background:radial-gradient(circle at 35% 30%,#fff9,transparent 40%),#a8325b}
+.bead.now{background:radial-gradient(circle at 35% 30%,#fff9,transparent 40%),var(--gold);scale:1.25;box-shadow:0 0 16px #f2c46daa}
+.step{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 24px;min-height:210px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.step h3{margin:0;font-family:var(--serif);font-weight:600;font-size:1.05rem;color:var(--gold)}
+.step p{margin:0;white-space:pre-line;font-family:var(--serif);font-size:clamp(1.3rem,3.5vw,1.55rem);line-height:1.5}
+.ctrl{display:flex;gap:12px;justify-content:center;margin-top:20px}
+.ctrl button{border-radius:999px;border:1px solid var(--line);background:none;padding:13px 26px}
+.ctrl .next{background:var(--gold);color:#1a1405;border-color:var(--gold);font-weight:600;min-width:170px}
+.ctrl button:disabled{opacity:.35;cursor:default}
+
+.nav{display:flex;justify-content:center;gap:6px;margin-bottom:34px}
+.nav button{background:none;border:0;border-bottom:2px solid transparent;padding:8px 18px;color:var(--mut);font-size:1rem}
+.nav button[aria-pressed=true]{color:var(--ink);border-color:var(--gold)}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:0 0 28px;scrollbar-width:none}
+.tabs button{flex:none;border:1px solid var(--line);background:none;border-radius:999px;padding:9px 18px;color:var(--mut)}
+.tabs button[aria-selected=true]{background:var(--gold);color:#1a1405;border-color:var(--gold);font-weight:600}
+.tabs .hoje{display:inline-block;margin-left:8px;font-size:.7rem;padding:2px 7px;border-radius:99px;background:#a8325b;color:#fff;font-weight:500}
+.tp{max-width:680px;margin:0 auto}
+.tp h2{font-size:clamp(2.2rem,7vw,3.4rem);line-height:1}
+.tp .dias{color:var(--mut);margin:10px 0 22px}
+.tp ol{font-family:var(--serif);font-size:1.4rem;line-height:1.5;padding-left:1.4em;margin:0 0 26px}
+.tp ol li::marker{color:var(--gold)}
+.tp .row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{border-radius:999px;border:1px solid var(--line);background:none;padding:13px 26px}
+.btn.pri{background:var(--gold);color:#1a1405;border-color:var(--gold);font-weight:600}
+.btn:disabled{opacity:.5;cursor:default}
+.stat{color:var(--mut);margin-top:22px;font-size:.95rem}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <nav class="nav" id="nav"><button data-v="home" aria-pressed="true">Santos</button><button data-v="tercos" aria-pressed="false">Terços da semana</button></nav>
+  <section id="home">
+    <div class="hero">
+      <h1>Sancti estote</h1>
+      <p>Escolha um santo e reze com calma.</p>
+    </div>
+    <div class="windows">
+      <button class="arch a1" data-s="aquinas"><span><b>Tomás de Aquino</b><small>Oração para pedir sabedoria e oração antes dos estudos</small></span></button>
+      <button class="arch a2" data-s="rita"><span><b>Santa Rita de Cássia</b><small>Oração e terço dos impossíveis</small></span></button>
+      <button class="arch a3" data-s="agostinho"><span><b>Santo Agostinho</b><small>Oração e terço de Santo Agostinho</small></span></button>
+    </div>
+  </section>
+
+  <section id="tercos" hidden>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="tp" id="tp"></div>
+  </section>
+
+  <section id="reader" hidden>
+    <div class="top"><button class="back" id="back">Voltar</button></div>
+    <div class="head">
+      <div><h2 id="name"></h2><p id="sub"></p></div>
+      <button class="candle-btn" id="candle" aria-pressed="false" aria-label="Acender vela">
+        <span class="candle"><span class="flame"></span></span>
+        <span id="candleTxt">Acender vela</span>
+      </button>
+    </div>
+    <div class="seg" id="seg" hidden>
+      <button data-m="read" aria-pressed="true">Oração</button>
+      <button data-m="rosary" aria-pressed="false">Terço</button>
+    </div>
+    <div class="prayer" id="prayer"></div>
+    <div class="rosary" id="rosary" hidden>
+      <div class="bar"><i id="fill"></i></div>
+      <div class="count" id="count"></div>
+      <div class="beads" id="beads" aria-hidden="true"></div>
+      <div class="step" id="step" aria-live="polite"></div>
+      <div class="ctrl">
+        <button id="prev">Voltar</button>
+        <button class="next" id="next">Próxima conta</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const AQUINAS = `Concedei-me, ó Deus onipotente e misericordioso, ardentemente desejar, prudentemente descobrir, verazmente conhecer e perfeitamente realizar o que for do vosso agrado.
+
+Para louvor e glória do vosso nome, ordenai meu estado de vida e dai-me saber, poder e querer o que me pedis que faça. E dai-me levá-lo a cabo como convém à salvação de minha alma.
+
+Que o meu caminho até vós seja reto e seguro. Que eu não sucumba na prosperidade nem na adversidade, a fim de não me ensoberbecer na primeira nem desesperar na segunda. Que na fortuna eu vos renda graças e na dificuldade mantenha a paciência. Que eu de nada me alegre ou entristeça senão do que me leve a vós ou afaste de vós. Que a ninguém deseje agradar nem tema aborrecer senão somente a vós.
+
+Dai-me tudo fazer com caridade e o que não diz respeito ao vosso culto, reputá-lo como morto. Dai-me praticar minhas ações, não por costume, mas referindo-as a vós com devoção.
+
+Que por vós eu não dê valor às coisas transitórias, e me seja caro tudo o que vos diz respeito. Que me compraza, mais do que tudo, todo trabalho que for para vós e me aborreça todo descanso que não seja em vós.
+
+Dai-me, dulcíssimo Senhor, dirigir-vos meu coração frequente e ferventemente e, de alma contrita, emendar com firme propósito a minha fraqueza.
+
+Fazei-me, ó Deus, humilde sem fingimento; alegre sem dissipação; grave sem depressão; maduro sem severidade; vivaz sem leviandade; veraz sem duplicidade; temente sem desespero; confiante sem presunção; casto sem corrupção; corrigir ao próximo sem indignação e edificá-lo por exemplo e palavra sem exageração; obediente sem contradição; paciente sem murmuração.
+
+Dai-me, dulcíssimo Jesus, um coração desperto, para que nenhuma vã curiosidade o afaste de vós; imóvel, para que não ceda a nenhum afeto indigno; infatigável, para que não sucumba em nenhuma tribulação; livre, para que dele não se apodere nenhum prazer violento; e reto, para que não o faça desviar-se nenhuma má intenção.
+
+Concedei-me, dulcíssimo Deus, inteligência para conhecer-vos; diligência para buscar-vos; sabedoria para encontrar-vos; bondade para agradar-vos; perseverança para esperar-vos doce e fielmente; confiança para alcançar-vos felizmente. Fazei-me, pela penitência, suportar vossas penas; utilizar vossos benefícios nesta vida pela graça; e por fim, na pátria eterna, desfrutar de vossos gozos pela glória.
+
+Vós, que com o Pai e o Espírito Santo viveis e reinais pelos séculos dos séculos. Amém.`;
+
+const RITA_OPEN = `Minha gloriosa Santa Rita dos impossíveis, como não vos foi impossível tornar novo o santo hábito que usastes durante os 35 anos e como não vos foi impossível a cura repentina de uma ferida, também não vos seja impossível o que humildemente vos peço.
+
+(Peça sua graça.)`;
+const RITA_BIG = `Minha gloriosa Santa Rita dos Impossíveis, como não vos foi impossível salvardes o vosso marido das penas do inferno, como não vos foi impossível entrardes no convento depois de viúva sem o consentimento das freiras e amanhecestes milagrosamente no meio delas, assim ó gloriosa Santa Rita não me seja impossível alcançar o que humildemente vos peço.`;
+const RITA_SMALL = `Santa Rita dos impossíveis nada para vós é impossível.`;
+
+const AGOSTINHO = `Ó Deus, que nos destes o vosso Filho como modelo de vida, concedei-nos, por intercessão de Santo Agostinho, a graça de imitá-lo em todas as coisas e de seguir os seus ensinamentos com fidelidade.`;
+
+const STUDY = [
+"Criador inefável, que, dentre os tesouros da vossa sabedoria, estabelecestes três hierarquias de Anjos e as dispusestes em admirável ordem acima do céu empíreo, e que distribuístes com tão sábia harmonia as diversas partes do universo;",
+"Vós, que sois chamado a verdadeira fonte da luz e da sabedoria e o supremo princípio, dignai-vos infundir sobre as trevas da minha inteligência um raio da vossa claridade, afastando de mim a dupla treva em que nasci: o pecado e a ignorância.",
+"Vós, que tornais eloquente a língua das crianças, ensinai a minha língua e derramai sobre meus lábios a graça da vossa bênção.",
+"Dai-me agudeza para entender, capacidade para reter, método e facilidade para aprender, sutileza para interpretar e graça abundante para falar.",
+"Dai-me acerto ao começar, direção ao progredir e perfeição ao concluir.",
+"Vós, que sois verdadeiro Deus e verdadeiro homem, e viveis e reinais pelos séculos dos séculos. Amém."
+].map((t,i,a)=>({h:"Antes do estudo · "+(i+1)+" de "+a.length,t}));
+
+const SAINTS = {
+  aquinas:{name:"Tomás de Aquino",sub:"Oração para pedir sabedoria e retidão",text:AQUINAS,rosary:true,label:"Antes do estudo",steps:STUDY},
+  rita:{name:"Santa Rita de Cássia",sub:"Oferecimento do terço, Santa dos impossíveis",text:RITA_OPEN,rosary:true},
+  agostinho:{name:"Santo Agostinho",sub:"Oração pela graça de seguir os ensinamentos",text:AGOSTINHO}
+};
+
+const $ = id => document.getElementById(id);
+const home=$("home"), reader=$("reader"), prayer=$("prayer"), rosary=$("rosary"), seg=$("seg");
+
+function esc(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]))}
+function paras(t){return t.split(/\n\n/).map(p=>"<p>"+esc(p)+"</p>").join("")}
+
+function open(key){
+  const s = typeof key==="string" ? SAINTS[key] : key;
+  if(s.rosary){steps.splice(0,steps.length,...(s.steps||RITA_STEPS));cur=0;}
+  $("name").textContent = s.name;
+  $("sub").textContent = s.sub;
+  prayer.innerHTML = paras(s.text);
+  seg.hidden = !s.rosary;
+  seg.querySelector('[data-m="rosary"]').textContent = s.label || "Terço";
+  setMode("read");
+  home.hidden = true; $("tercos").hidden = true; $("nav").hidden = true; reader.hidden = false;
+  window.scrollTo(0,0);
+  $("back").focus({preventScroll:true});
+}
+function close(){
+  reader.hidden = true; $("nav").hidden = false; show(view);
+  setCandle(false);
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".arch").forEach(b=>b.addEventListener("click",()=>{curKey=null;open(b.dataset.s)}));
+$("back").addEventListener("click",close);
+
+/* vela */
+function setCandle(on){
+  document.body.classList.toggle("lit",on);
+  $("candle").classList.toggle("lit",on);
+  $("candle").setAttribute("aria-pressed",on);
+  $("candleTxt").textContent = on ? "Apagar vela" : "Acender vela";
+}
+$("candle").addEventListener("click",()=>setCandle(!$("candle").classList.contains("lit")));
+
+/* modo oração / terço */
+function setMode(m){
+  seg.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.m===m));
+  prayer.hidden = m!=="read";
+  rosary.hidden = m!=="rosary";
+  if(m==="rosary") draw();
+}
+seg.addEventListener("click",e=>{const b=e.target.closest("button");if(b)setMode(b.dataset.m)});
+
+/* terço de Santa Rita: 6 orações iniciais + 5 dezenas (1 grande + 10 pequenas + Glória) */
+const steps = [
+  {h:"Oferecimento",t:RITA_OPEN,big:true},
+  {h:"Início",t:"Reze 1 Creio.",big:true},
+  {h:"Início",t:"Reze 1 Pai Nosso.",big:true},
+  {h:"Início",t:"Reze a 1ª Ave Maria (de 3).",big:false},
+  {h:"Início",t:"Reze a 2ª Ave Maria (de 3).",big:false},
+  {h:"Início",t:"Reze a 3ª Ave Maria (de 3).",big:false},
+  {h:"Início",t:"Reze 1 Glória ao Pai.",big:true}
+];
+const ORD=["Primeira","Segunda","Terceira","Quarta","Quinta"];
+for(let d=0;d<5;d++){
+  steps.push({h:ORD[d]+" dezena · conta maior",t:RITA_BIG,big:true,d});
+  for(let i=1;i<=10;i++) steps.push({h:ORD[d]+" dezena · conta "+i+" de 10",t:RITA_SMALL,d,i});
+  steps.push({h:ORD[d]+" dezena · final",t:"Glória ao Pai…",big:true,d});
+}
+let cur = 0;
+const RITA_STEPS = steps.slice();
+function draw(){
+  const s = steps[cur];
+  $("fill").style.width = ((cur+1)/steps.length*100)+"%";
+  $("count").textContent = (steps.some(x=>x.d!==undefined)?"Conta ":"Parte ")+(cur+1)+" de "+steps.length;
+  $("step").innerHTML = "<h3>"+esc(s.h)+"</h3><p>"+esc(s.t)+"</p>";
+  const box = $("beads"); box.innerHTML = "";
+  const n = steps.findIndex(x=>x.d!==undefined);
+  box.hidden = n<0;
+  if(s.d===undefined){
+    steps.slice(0,n<0?0:n).forEach((x,i)=>box.append(bead(i,x.big)));
+  } else {
+    const base = n + s.d*12;
+    for(let k=0;k<12;k++){ box.append(bead(base+k, k===0||k===11)); }
+  }
+  $("prev").disabled = cur===0;
+  const last = cur===steps.length-1;
+  $("next").textContent = last ? "Concluir" : "Próxima conta";
+}
+function bead(idx,big){
+  const b=document.createElement("i");
+  b.className="bead"+(big?" big":"")+(idx<cur?" done":"")+(idx===cur?" now":"");
+  return b;
+}
+$("next").addEventListener("click",async()=>{
+  if(cur===steps.length-1){ if(curKey) await registrar(curKey); cur=0; close(); return; }
+  cur++; draw();
+});
+$("prev").addEventListener("click",()=>{if(cur>0){cur--;draw();}});
+/* terços da semana */
+const MO=["Primeiro","Segundo","Terceiro","Quarto","Quinto"];
+
+/* terço de Santo Agostinho */
+const AG_M=[
+ ["A vida mundana de Agostinho","Contemple o tempo em que ele viveu longe de Deus. Peça pelos que estão afastados e precisam de conversão."],
+ ["A conversão e o batismo","Contemple o batismo de Agostinho e de seu filho Adeodato. Peça a graça da conversão para os seus conhecidos."],
+ ["As mortes de Adeodato e de Santa Mônica","Contemple as perdas que mudaram o rumo da vida dele. Peça a graça de entender os sinais de Deus nos acontecimentos."],
+ ["O ministério sacerdotal e episcopal","Contemple o serviço dele como padre e bispo. Peça a graça de descobrir e cumprir a sua vocação com amor."],
+ ["As obras e a morte santa","Contemple os escritos que iluminaram a Igreja e a sua morte santa. Peça a graça de uma morte santa, tendo cumprido a sua missão."]
+];
+const AG_INV="Santo Agostinho, que foste exemplo de amor, trabalho e caridade, ajuda-me a levar este amor no meu trabalho, na minha casa e na minha vida. Amém.";
+const AG_FIM=`Gloriosíssimo Pai Santo Agostinho, que por divina providência fostes chamado das trevas do paganismo, dos caminhos do erro e da culpa à admirável luz do Evangelho e aos retíssimos caminhos da graça e da justificação, para ser ante os homens vaso de predileção divina e brilhar em dias calamitosos para a Igreja, como estrela da manhã entre as trevas da noite: alcançai-nos do Deus de toda consolação e misericórdia a graça de sermos chamados e predestinados, como Vós o fostes, à vida da graça e à graça da eterna vida, onde juntamente convosco, cantemos as misericórdias do Senhor e gozemos a sorte dos eleitos pelos séculos dos séculos. Amém.`;
+const AG_STEPS=[["Sinal da cruz e 1 Creio.",1],["Reze 1 Pai Nosso.",1],["Reze a 1ª Ave Maria (de 3).",0],["Reze a 2ª Ave Maria (de 3).",0],["Reze a 3ª Ave Maria (de 3).",0],["Reze 1 Glória ao Pai.",1],["Faça o seu pedido.",1]].map(([t,b])=>({h:"Início",t,big:!!b}));
+AG_M.forEach(([nome,pedido],d)=>{
+  AG_STEPS.push({h:ORD[d]+" dezena · conta maior",t:MO[d]+" mistério: "+nome+".\n"+pedido+"\nReze 1 Pai Nosso.",big:true,d});
+  for(let i=1;i<=10;i++) AG_STEPS.push({h:ORD[d]+" dezena · conta "+i+" de 10",t:AG_INV,d,i});
+  AG_STEPS.push({h:ORD[d]+" dezena · final",t:"Reze o Glória ao Pai.",big:true,d});
+});
+AG_STEPS.push({h:"Final",t:"Reze a Salve Rainha."},{h:"Final · Oração a Santo Agostinho",t:AG_FIM});
+Object.assign(SAINTS.agostinho,{rosary:true,label:"Terço",steps:AG_STEPS});
+const MIST={
+  gozosos:{nome:"Gozosos",dias:"Segunda-feira e sábado",dow:[1,6],m:["A Anunciação do Anjo a Maria","A Visitação de Maria a Isabel","O Nascimento de Jesus em Belém","A Apresentação de Jesus no Templo","A Perda e o Encontro do Menino Jesus no Templo"]},
+  luminosos:{nome:"Luminosos",dias:"Quinta-feira",dow:[4],m:["O Batismo de Jesus no Jordão","A Revelação de Jesus nas Bodas de Caná","O Anúncio do Reino de Deus e o convite à conversão","A Transfiguração de Jesus","A Instituição da Eucaristia"]},
+  dolorosos:{nome:"Dolorosos",dias:"Terça-feira e sexta-feira",dow:[2,5],m:["A Agonia de Jesus no Horto","A Flagelação de Jesus","A Coroação de Espinhos","Jesus carrega a Cruz até o Calvário","A Crucifixão e Morte de Jesus"]},
+  gloriosos:{nome:"Gloriosos",dias:"Quarta-feira e domingo",dow:[3,0],m:["A Ressurreição de Jesus","A Ascensão de Jesus ao Céu","A Vinda do Espírito Santo","A Assunção de Maria ao Céu","A Coroação de Maria como Rainha do Céu e da Terra"]}
+};
+function mistSteps(m){
+  const st=RITA_STEPS.slice(1,7);
+  m.forEach((x,d)=>{
+    st.push({h:ORD[d]+" dezena · conta maior",t:MO[d]+" mistério: "+x+".\nReze 1 Pai Nosso.",big:true,d});
+    for(let i=1;i<=10;i++) st.push({h:ORD[d]+" dezena · Ave Maria "+i+" de 10",t:"Medite: "+x+".",d,i});
+    st.push({h:ORD[d]+" dezena · final",t:"Reze o Glória ao Pai e o Ó meu Jesus.",big:true,d});
+  });
+  return st;
+}
+let hist=[], tab=null, view="home", curKey=null;
+const LS="sancti_hist";
+const iso=()=>new Date().toLocaleDateString("sv-SE");
+const papi=()=>window.pywebview&&window.pywebview.api;
+async function carregar(){
+  try{ if(papi()) return await papi().carregar(); }catch(e){}
+  try{ return JSON.parse(localStorage.getItem(LS)||"[]"); }catch(e){ return []; }
+}
+async function registrar(k){
+  try{ if(papi()){ hist=await papi().registrar(k); return; } }catch(e){}
+  if(!hist.some(x=>x.d===iso()&&x.k===k)) hist.push({d:iso(),k});
+  try{ localStorage.setItem(LS,JSON.stringify(hist)); }catch(e){}
+}
+function streak(h){
+  const s=new Set(h.map(x=>x.d)), d=new Date(); let n=0;
+  if(!s.has(d.toLocaleDateString("sv-SE"))) d.setDate(d.getDate()-1);
+  while(s.has(d.toLocaleDateString("sv-SE"))){n++;d.setDate(d.getDate()-1);}
+  return n;
+}
+function show(v){
+  view=v; home.hidden=v!=="home"; $("tercos").hidden=v!=="tercos";
+  document.querySelectorAll("#nav button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));
+  if(v==="tercos") renderT();
+}
+$("nav").addEventListener("click",e=>{const b=e.target.closest("button");if(b)show(b.dataset.v)});
+async function renderT(){
+  hist=await carregar();
+  const dow=new Date().getDay();
+  const hojeKey=Object.keys(MIST).find(k=>MIST[k].dow.includes(dow));
+  if(!tab) tab=hojeKey;
+  $("tabs").innerHTML=Object.keys(MIST).map(k=>'<button role="tab" data-k="'+k+'" aria-selected="'+(k===tab)+'">'+MIST[k].nome+(k===hojeKey?'<span class="hoje">hoje</span>':'')+'</button>').join("");
+  const m=MIST[tab], feito=hist.some(x=>x.d===iso()&&x.k===tab), n=streak(hist);
+  const corpo=m.rita ? '<p class="hint">Oferecimento, Creio, Pai Nosso, 3 Ave Marias e 5 dezenas com a invocação dos impossíveis.</p>' : '<ol>'+m.m.map(x=>'<li>'+esc(x)+'</li>').join("")+'</ol>';
+  $("tp").innerHTML='<h2>'+(m.rita?"Terço de Santa Rita":"Mistérios "+m.nome)+'</h2><p class="dias">'+m.dias+'</p>'+corpo+
+    '<div class="row"><button class="btn pri" data-a="rezar">Rezar este terço</button><button class="btn" data-a="marcar"'+(feito?" disabled":"")+'>'+(feito?"Rezado hoje":"Marcar como rezado")+'</button></div>'+
+    '<p class="stat">'+(n>0?n+(n===1?" dia seguido":" dias seguidos")+" rezando":"Nenhum terço marcado hoje ainda")+'</p>';
+}
+$("tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(b){tab=b.dataset.k;renderT();}});
+$("tp").addEventListener("click",async e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.a==="rezar") openTerco(tab);
+  if(b.dataset.a==="marcar"){ await registrar(tab); renderT(); }
+});
+function openTerco(k){
+  const m=MIST[k]; curKey=k;
+  if(m.rita){ open("rita"); return; }
+  open({name:"Terço "+m.nome,sub:m.dias,rosary:true,steps:mistSteps(m.m),text:m.m.map((x,i)=>MO[i]+" mistério: "+x).join("\n\n")});
+}
+window.addEventListener("pywebviewready",()=>{ if(view==="tercos") renderT(); });
+
+document.addEventListener("keydown",e=>{
+  if(rosary.hidden||reader.hidden) return;
+  if(e.key==="ArrowRight"){$("next").click()}
+  if(e.key==="ArrowLeft"){$("prev").click()}
+});
+</script>
+</body>
+</html>
